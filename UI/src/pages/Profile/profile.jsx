@@ -23,7 +23,7 @@ function Profile() {
       }
 
       const user = await response.json();
-      setUser(user);
+      setUser(user.user);
     } catch (err) {
       setError(err.message);
       // setTimeout(() => {

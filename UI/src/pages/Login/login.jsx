@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { login } from "../../../api/authApi";
 
 const baseAPI = "http://localhost:8080/users";
 
@@ -41,25 +42,14 @@ function Login() {
 
   function loginButtonHandler() {
     setError(null);
-    fetch(`${baseAPI}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(fields),
-    })
-      .then((response) => {
-        if (response.ok) return response.json();
-        throw response;
-      })
+    login(fields)
       .then(({ token }) => {
         console.log(token);
         localStorage.setItem("accessToken", token);
         window.location.replace("/Profile");
       })
       .catch(async (err) => {
-        const e = await err.json();
-        setError(e.message);
+        setError(err.message);
         setFields((prev) => ({
           ...prev,
           password: "",
