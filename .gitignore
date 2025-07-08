@@ -1,0 +1,15 @@
+# Frontend
+/UI/node_modules/
+/UI/dist/
+/UI/.env
+
+# Backend
+/SERVER/node_modules/
+/SERVER/dist/
+/SERVER/.env
+
+# Chung
+*.log
+*.env.*
+.DS_Store
+.vscode/
