@@ -1,7 +1,7 @@
 const baseAPIUser = "http://localhost:8080/users";
 
 export async function login(fields) {
-  const res = await fetch(`${baseAPIUser}/login`, {
+  const response = await fetch(`${baseAPIUser}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -9,10 +9,62 @@ export async function login(fields) {
     body: JSON.stringify(fields),
   });
 
-  if (!res.ok) {
-    const error = await res.json();
+  if (!response.ok) {
+    const error = await response.json();
     throw new Error(error.message);
   }
 
-  return res.json(); // Trả về { token }
+  return response.json(); // Trả về { token }
+}
+
+export async function register(fields) {
+  const response = await fetch(`${baseAPIUser}/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(fields),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  const { token } = await response.json();
+  localStorage.removeItem("accessToken");
+  localStorage.setItem("accessToken", token);
+  window.location.replace("/profile");
+}
+
+export async function getUserProfile() {
+  const response = await fetch(`${baseAPIUser}/me`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  return response.json();
+}
+
+export async function logout() {
+  const response = await fetch(`${baseAPIUser}/logout`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+
+  localStorage.removeItem("accessToken");
+  window.location.replace("/?logout=true");
 }
