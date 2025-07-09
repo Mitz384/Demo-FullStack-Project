@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { login } from "../../../api/authApi";
 
-const baseAPI = "http://localhost:8080/users";
+const baseAPI = "http://localhost:8080/api/users";
 
 function Login() {
   const [fields, setFields] = useState({

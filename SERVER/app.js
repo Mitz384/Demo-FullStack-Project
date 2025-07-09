@@ -15,6 +15,6 @@ app.use(
 );
 app.use(express.json());
 app.use(passport.initialize());
-app.use("/users", authUserRouter);
+app.use("/api/users", authUserRouter);
 
 module.exports = app;
