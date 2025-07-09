@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-
-const baseAPI = "http://localhost:8080/users";
+import { useState } from "react";
+import { register } from "../../../api/authApi";
 
 function Register() {
   const [fields, setFields] = useState({
@@ -22,27 +21,11 @@ function Register() {
   const handleSubmit = async (event) => {
     setError(null);
     event.preventDefault();
-    try {
-      const response = await fetch(`${baseAPI}/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(fields),
+    register(fields)
+      .catch((err) => {
+        console.error(err.message);
+        setError(err.message);
       });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
-      const { token } = await response.json();
-      console.log(token);
-      localStorage.removeItem("accessToken");
-      localStorage.setItem("accessToken", token);
-      window.location.replace("/profile");
-    } catch (err) {
-      console.error(err.message);
-      setError(err.message);
-    }
   };
 
   return (
@@ -112,7 +95,7 @@ function Register() {
               onChange={handleFieldChange}
             />
           </label>
-          {error ? <p className="text-red-500">{error}</p>: <></>}
+          {error ? <p className="text-red-500">{error}</p> : <></>}
           <input
             type="submit"
             value="Đăng ký"

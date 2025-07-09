@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-
-const baseAPI = "http://localhost:8080/users";
+import { getUserProfile, logout } from "../../../api/authApi";
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -11,19 +10,8 @@ function Profile() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${baseAPI}/me`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message);
-      }
-
-      const user = await response.json();
-      setUser(user);
+      const user = await getUserProfile();
+      setUser(user.user);
     } catch (err) {
       setError(err.message);
       // setTimeout(() => {
@@ -57,21 +45,7 @@ function Profile() {
   }
 
   function handleButtonLogout() {
-    fetch(`${baseAPI}/logout`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          localStorage.removeItem("accessToken");
-          window.location.replace("/?logout=true");
-          return;
-        }
-        throw response.json();
-      })
-      .catch((err) => console.error(err.message));
+    logout().catch((err) => console.error(err.message));
   }
 
   return (
