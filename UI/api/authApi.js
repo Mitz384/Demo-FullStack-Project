@@ -1,7 +1,7 @@
-const baseAPIUser = "http://localhost:8080/api/users";
+import { USER_API } from "../src/config/api";
 
 export async function login(fields) {
-  const response = await fetch(`${baseAPIUser}/login`, {
+  const response = await fetch(`${USER_API}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -18,7 +18,7 @@ export async function login(fields) {
 }
 
 export async function register(fields) {
-  const response = await fetch(`${baseAPIUser}/register`, {
+  const response = await fetch(`${USER_API}/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export async function register(fields) {
 }
 
 export async function getUserProfile() {
-  const response = await fetch(`${baseAPIUser}/me`, {
+  const response = await fetch(`${USER_API}/me`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
@@ -53,7 +53,7 @@ export async function getUserProfile() {
 }
 
 export async function logout() {
-  const response = await fetch(`${baseAPIUser}/logout`, {
+  const response = await fetch(`${USER_API}/logout`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,

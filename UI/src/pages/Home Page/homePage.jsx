@@ -1,17 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getAllProducts } from "../../../api/productApi";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 function homePage() {
   const [products, setProducts] = useState(null);
+  const [searchParams] = useSearchParams();
+  const hasAlerted = useRef(false);
+  const navigate = useNavigate();
 
+  // Check logout
+  useEffect(() => {
+    const logout = searchParams.get("logout");
+    if (!hasAlerted.current && logout) {
+      console.log("Đã đăng xuất thành công");
+      hasAlerted.current = true;
+    }
+    navigate(window.location.pathname, { replace: true });
+  }, []);
+
+  // Fetch products from API
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const allProducts = await getAllProducts();
-        const priceProducts = allProducts.map(product => ({
+        const priceProducts = allProducts.map((product) => ({
           ...product,
-          price: product.price.toLocaleString("vi-VN") // Format price to 2 decimal places
-        }))
+          price: product.price.toLocaleString("vi-VN"),
+        }));
         setProducts(priceProducts);
       } catch (error) {
         console.error(error.message);

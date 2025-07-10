@@ -20,10 +20,10 @@ function Login() {
 
     if (!hasAlerted.current) {
       if (err) {
-        alert(decodeURIComponent(err));
+        console.log(decodeURIComponent(err));
         hasAlerted.current = true;
       } else if (logout) {
-        alert("Đã đăng xuất thành công");
+        console.log("Đã đăng xuất thành công");
         hasAlerted.current = true;
       }
 
