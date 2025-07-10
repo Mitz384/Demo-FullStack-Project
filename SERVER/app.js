@@ -1,8 +1,10 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const passport = require("passport");
 const authUserRouter = require("./routers/User/userRoutes");
+const productRouter = require("./routers/Product/productRoutes");
 
 const app = express();
 
@@ -16,5 +18,7 @@ app.use(
 app.use(express.json());
 app.use(passport.initialize());
 app.use("/api/users", authUserRouter);
+app.use("/api/products", productRouter);
+app.use("/images", express.static(path.join(__dirname, "./public/images")));
 
 module.exports = app;

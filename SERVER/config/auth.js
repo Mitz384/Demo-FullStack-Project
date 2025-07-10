@@ -1,21 +1,13 @@
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const connection = require("./db");
 const { createUserWithGoogle } = require("../services/userService");
-
-function createToken(payload) {
-  return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-}
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/users/auth/google/callback",
+      callbackURL: "http://localhost:8080/api/users/auth/google/callback",
       passReqToCallback: true,
     },
     async function (request, accessToken, refreshToken, profile, done) {
