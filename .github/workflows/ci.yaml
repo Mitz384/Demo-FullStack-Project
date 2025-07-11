@@ -25,16 +25,9 @@ jobs:
         run: npm install
         working-directory: ./SERVER
 
-      - name: Setup environment variables
+      - name: Debug DB_NAME_TEST
         run: |
-          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
-          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
-          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
-          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
-        working-directory: ./SERVER
+          echo "Database to be used: '${{ secrets.DB_NAME_TEST }}'"
 
       - name: Wait for PostgreSQL to be ready
         run: |
@@ -47,7 +40,7 @@ jobs:
 
       - name: Create Test Database
         run: |
-          set -e 
+          set -e
           echo "Attempting to create database ${{ secrets.DB_NAME_TEST }}..."
           psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d postgres -tc "SELECT 1 FROM pg_database WHERE datname = '${{ secrets.DB_NAME_TEST }}'" | grep -q 1 || \
           psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d postgres -c "CREATE DATABASE ${{ secrets.DB_NAME_TEST }};"
@@ -56,6 +49,7 @@ jobs:
         working-directory: ./SERVER
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
+
 
       - name: Initialize Test Database Schema
         run: |
