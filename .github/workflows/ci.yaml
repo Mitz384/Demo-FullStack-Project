@@ -49,11 +49,11 @@ jobs:
       - name: Create Test Database
         run: |
           psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d postgres -c "CREATE DATABASE ${{ secrets.DB_NAME_TEST }};"
-        working-directory: ./server
+        working-directory: ./SERVER
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
-      - name: Initialize Test Database Schema # THÊM LẠI BƯỚC NÀY
+      - name: Initialize Test Database Schema
         run: |
           psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME_TEST }} -f ./db_scripts/init_test_db.sql
         working-directory: ./SERVER # Đảm bảo chạy từ thư mục SERVER
