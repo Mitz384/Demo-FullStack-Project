@@ -50,7 +50,6 @@ jobs:
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
-
       - name: Initialize Test Database Schema
         run: |
           set -e
@@ -62,11 +61,18 @@ jobs:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Run tests
-        run: npm test
         working-directory: ./SERVER
         env:
           NODE_ENV: test
-        
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: ${{ secrets.DB_NAME_TEST }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        run: npm test
 
     services:
       postgres:
