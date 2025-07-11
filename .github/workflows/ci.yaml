@@ -25,19 +25,6 @@ jobs:
         run: npm install
         working-directory: ./SERVER
 
-      - name: Debug DB_NAME_TEST
-        run: |
-          echo "Database to be used: '${{ secrets.DB_NAME_TEST }}'"
-
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          for i in $(seq 1 10); do
-            # Sử dụng nc (netcat) để kiểm tra kết nối TCP đến cổng 5432
-            nc -z localhost 5432 && echo "PostgreSQL is ready" && break
-            echo "Waiting for PostgreSQL to be ready..."
-            sleep 5
-          done
-
       - name: Create Test Database
         run: |
           set -e
