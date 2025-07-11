@@ -37,7 +37,7 @@ jobs:
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
         working-directory: ./SERVER
 
-      - name: Wait for PostgreSQL to be ready # THÊM LẠI BƯỚC NÀY VÀ ĐẶT ĐÚNG VỊ TRÍ
+      - name: Wait for PostgreSQL to be ready
         run: |
           for i in $(seq 1 10); do
             # Sử dụng nc (netcat) để kiểm tra kết nối TCP đến cổng 5432
@@ -48,15 +48,22 @@ jobs:
 
       - name: Create Test Database
         run: |
+          set -e 
+          echo "Attempting to create database ${{ secrets.DB_NAME_TEST }}..."
+          psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d postgres -tc "SELECT 1 FROM pg_database WHERE datname = '${{ secrets.DB_NAME_TEST }}'" | grep -q 1 || \
           psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d postgres -c "CREATE DATABASE ${{ secrets.DB_NAME_TEST }};"
+          echo "Database ${{ secrets.DB_NAME_TEST }} created or already exists."
         working-directory: ./SERVER
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
       - name: Initialize Test Database Schema
         run: |
+          set -e
+          echo "Initializing schema in database ${{ secrets.DB_NAME_TEST }}..."
           psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME_TEST }} -f ./db_scripts/init_test_db.sql
-        working-directory: ./SERVER # Đảm bảo chạy từ thư mục SERVER
+          echo "Schema initialized successfully."
+        working-directory: ./SERVER
         env:
           PGPASSWORD: ${{ secrets.DB_PASSWORD }}
 
