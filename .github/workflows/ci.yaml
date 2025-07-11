@@ -36,7 +36,14 @@ jobs:
           echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
           echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
         working-directory: ./SERVER
-        
+
+      - name: Initialize test database
+        run: |
+          psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME_TEST }} -f ./db_scripts/init_test_db.sql
+        working-directory: ./SERVER
+        env:
+          PGPASSWORD: ${{ secrets.DB_PASSWORD }}
+
       - name: Run tests
         run: npm test
         working-directory: ./SERVER
