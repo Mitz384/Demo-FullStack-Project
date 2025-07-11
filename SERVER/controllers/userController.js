@@ -4,7 +4,6 @@ const {
   updateUserStatus,
   getUserInfo,
 } = require("../services/userService");
-const jwt = require("jsonwebtoken");
 const { createToken } = require("../helpers/jwt");
 
 exports.registerUser = async (req, res) => {
