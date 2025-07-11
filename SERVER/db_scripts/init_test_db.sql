@@ -28,6 +28,6 @@ INSERT INTO users (first_name, last_name, email, password) VALUES
 ( 'Doan', 'Nhu', 'doannhuson2004@gmail.com', '$2b$10$6e8dgGxUVkPJLX4qDMOBFencxhSJ9HBK.Aq1d//Yw6GI3PmWGFLZO' );
 
 
-INSERT INTO products (name, description, price, category, stock) VALUES
+INSERT INTO products (name, description, price, stock, image_url) VALUES
 ( 'Áo thun nam cotton', 'Áo thun chất cotton thoáng mát, co giãn tốt', 199000, 50, '/images/ao-thun-nam.jpg' ),
 ( 'Quần jean nữ', 'Quần jean lưng cao thời trang, tôn dáng', 349000, 30, '/images/quan-jean-nu.jpg' );
