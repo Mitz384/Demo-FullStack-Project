@@ -39,6 +39,9 @@ jobs:
       - name: Run tests
         run: npm test
         working-directory: ./SERVER
+        env:
+          NODE_ENV: test
+        
 
     services:
       postgres:
