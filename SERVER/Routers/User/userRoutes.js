@@ -13,10 +13,6 @@ const authenticateToken = require("../../middleWare/authenticateToken");
 
 require("../../config/auth");
 
-const app = express();
-
-app.use(passport.initialize());
-
 router.post("/register", registerUser);
 router.post("/login", authLogin, loginUser);
 router.post("/logout", authenticateToken, logoutUser);
