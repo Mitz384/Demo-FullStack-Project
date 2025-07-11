@@ -6,6 +6,13 @@
     "start": "node --watch server.js",
     "test": "jest --runInBand"
   },
+  "_moduleAliases": {
+    "@routes": "routers",
+    "@controllers": "controllers",
+    "@services": "services",
+    "@middlewares": "middleWare",
+    "@config": "config"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +23,7 @@
     "dotenv": "^17.0.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
     "pg": "^8.16.3"

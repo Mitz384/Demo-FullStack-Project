@@ -1,10 +1,12 @@
 require("dotenv").config();
+require("module-alias/register");
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const passport = require("passport");
-const authUserRouter = require("./routers/User/userRoutes");
-const productRouter = require("./routers/Product/productRoutes");
+const authUserRouter = require("@routers/User/userRoutes");
+const productRouter = require("@routers/Product/productRoutes");
 
 const app = express();
 
