@@ -21,6 +21,11 @@ const authLogin = async function (req, res, next) {
 
     if (userResult.rows.length > 0) {
       foundUser = userResult.rows[0];
+      if (!foundUser.password) {
+        return res.status(401).json({
+          message: "This account is logged by Google, please login with Google",
+        });
+      }
       isMatch = await bcrypt.compare(password, foundUser.password);
     } else {
       await bcrypt.compare(

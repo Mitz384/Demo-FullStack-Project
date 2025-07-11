@@ -41,7 +41,7 @@ function Profile() {
 
   function handleLogoutAndRedirect() {
     localStorage.removeItem("accessToken");
-    window.location.replace("/");
+    window.location.replace("/login");
   }
 
   function handleButtonLogout() {
