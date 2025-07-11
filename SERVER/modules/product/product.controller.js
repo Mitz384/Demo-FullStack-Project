@@ -1,4 +1,4 @@
-const { getAllProducts } = require("../services/productService");
+const { getAllProducts } = require("./product.service");
 
 exports.getAllProducts = async (req, res) => {
   try {

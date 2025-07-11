@@ -7,7 +7,7 @@ const {
   logoutUser,
   getCurrentUser,
   googleLoginCallback,
-} = require("../../controllers/userController");
+} = require("./user.controller");
 const authLogin = require("../../middleWare/authLogin");
 const authenticateToken = require("../../middleWare/authenticateToken");
 

@@ -4,8 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const passport = require("passport");
-const authUserRouter = require(path.join(__dirname, "routers", "User", "userRoutes"));
-const productRouter = require(path.join(__dirname, "routers", "Product", "productRoutes"));
+const authUserRouter = require("./modules/user");
+const productRouter = require("./modules/product");
 
 const app = express();
 

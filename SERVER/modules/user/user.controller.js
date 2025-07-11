@@ -3,8 +3,8 @@ const {
   createUserWithEmail,
   updateUserStatus,
   getUserInfo,
-} = require("../services/userService");
-const { createToken } = require("../helpers/jwt");
+} = require("./user.service");
+const { createToken } = require("../../helpers/jwt");
 
 exports.registerUser = async (req, res) => {
   const { firstName, lastName, email, phoneNumber, password } = req.body;
@@ -93,7 +93,7 @@ exports.googleLoginCallback = (req, res, next) => {
       const errorMessage = encodeURIComponent(
         err?.message || "Token missing or user not found"
       );
-      return res.redirect(`http://localhost:5173/?error=${errorMessage}`);
+      return res.redirect(`http://localhost:5173/login?error=${errorMessage}`);
     }
 
     return res.redirect(`http://localhost:5173/profile?token=${user.token}`);

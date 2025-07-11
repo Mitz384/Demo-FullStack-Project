@@ -1,0 +1,1 @@
+exports.standardizePhoneNumber = (phone) => phone.replace(/\s+/g, "");

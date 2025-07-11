@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
-const { createUserWithGoogle } = require("../services/userService");
+const { createUserWithGoogle } = require("../modules/user/user.service");
 
 if (process.env.NODE_ENV !== "test") {
   passport.use(
