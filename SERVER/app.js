@@ -5,8 +5,8 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const passport = require("passport");
-const authUserRouter = require("@routes/User/userRoutes");
-const productRouter = require("@routes/Product/productRoutes");
+const authUserRouter = require(path.join(__dirname, "routers", "User", "userRoutes"));
+const productRouter = require(path.join(__dirname, "routers", "Product", "productRoutes"));
 
 const app = express();
 
