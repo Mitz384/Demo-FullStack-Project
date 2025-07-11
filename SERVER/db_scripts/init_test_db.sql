@@ -22,7 +22,7 @@ CREATE TABLE products (
     image_url VARCHAR(255)
 );
 
-INSERT INTO users (username, email, password, role) VALUES
+INSERT INTO users (first_name, last_name, email, password) VALUES
 ( 'Nguyen', 'Anh', 'nguyenanh123@gmail.com', '$2b$10$zJLHGDWnGn4eEt8RpFrlV.Y1rBJzNkwP6j8D4hPyaSKMru9tuVJ4K' ),
 ( 'Doan', 'Son', 'dnson384@gmail.com', NULL ),
 ( 'Doan', 'Nhu', 'doannhuson2004@gmail.com', '$2b$10$6e8dgGxUVkPJLX4qDMOBFencxhSJ9HBK.Aq1d//Yw6GI3PmWGFLZO' );
