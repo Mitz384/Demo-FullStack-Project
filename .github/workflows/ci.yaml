@@ -1,0 +1,55 @@
+name: Run Jest Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup environment variables
+        run: |
+          echo "DB_HOST=${{ secrets.DB_HOST }}" >> .env
+          echo "DB_USER=${{ secrets.DB_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> .env
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+
+      - name: Run tests
+        run: npm test
+
+    services:
+      postgres:
+        image: postgres:17
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
+        options: >-
+          # kiểm tra xem dịch vụ postgres đã sẵn sàng
+          --health-cmd="pg_isready -U ${{ secrets.DB_USER }}"
+          # mỗi 10 giây kiểm tra một lần
+          --health-interval=10s
+          # mỗi lần kiểm tra sẽ đợi tối đa 5 giây
+          --health-timeout=5s
+          # kiểm tra tối đa 5 lần, nếu sau 5 lần kiểm tra mà dịch vụ vẫn không sẵn sàng thì sẽ báo lỗi
+          --health-retries=5
