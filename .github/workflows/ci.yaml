@@ -41,7 +41,7 @@ jobs:
         run: |
           set -e
           echo "Initializing schema in database ${{ secrets.DB_NAME_TEST }}..."
-          psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME_TEST }} -f ./db_scripts/init_test_db.sql
+          psql -h localhost -p 5432 -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME_TEST }} -f ./db/init_test_db.sql
           echo "Schema initialized successfully."
         working-directory: ./SERVER
         env:
